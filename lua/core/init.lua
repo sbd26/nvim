@@ -57,3 +57,4 @@ g.mapleader = " "
 
 
 require("core.autocmd")
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH

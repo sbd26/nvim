@@ -28,10 +28,8 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 dofile(vim.g.base46_cache .. "defaults")
 require("plugins")
-vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH
-
-vim.lsp.inlay_hint(0, true)
