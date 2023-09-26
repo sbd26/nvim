@@ -5,7 +5,7 @@ local config = require("core.utils").load_config()
 
 --snippet stuff for luasnip
 vim.g.snipmate_snippets_path = "~/Templates/"
-
+opt.laststatus = 3 -- global statusline
 
 
 g.nvchad_theme = config.ui.theme
