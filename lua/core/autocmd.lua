@@ -29,3 +29,6 @@ vim.cmd [[
     autocmd InsertEnter * silent! :nohlsearch
   augroup END
 ]]
+
+
+vim.api.nvim_create_autocmd("LspAttach" , {command = "lua vim.lsp.inlay_hint(0, nil)"})
