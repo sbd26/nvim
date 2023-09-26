@@ -34,5 +34,4 @@ dofile(vim.g.base46_cache .. "defaults")
 require("plugins")
 vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH
 
-vim.lsp.inlay_hint(1, true)
--- dofile(vim.g.base46_cache .. "treesitter")
+vim.lsp.inlay_hint(0, true)
