@@ -19,7 +19,6 @@ local plugins = {
 	{
 		"nvim-tree/nvim-web-devicons",
 		event = "VeryLazy",
-		-- lazy = true,
 		config = function()
 			dofile(vim.g.base46_cache .. "devicons")
 			require("nvim-web-devicons").setup()
@@ -50,6 +49,7 @@ local plugins = {
 			require("core.utils").load_mappings("bufferline")
 		end,
 		config = function()
+      dofile(vim.g.base46_cache .. 'bufferline')
 			vim.opt.termguicolors = true
 			require("bufferline").setup({
 				options = {
@@ -133,6 +133,10 @@ local plugins = {
 
 	{
 		"neovim/nvim-lspconfig",
+    lazy = false,
+    init = function ()
+      require("core.utils").load_mappings('lspconfig')
+    end,
 		config = function()
 			dofile(vim.g.base46_cache .. "lsp")
 			require("plugins.configs.lspconfig")
