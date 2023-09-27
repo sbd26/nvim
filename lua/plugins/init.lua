@@ -3,6 +3,7 @@ local plugins = {
 	--Base Things for themeing
 	{
 		"sbd26/base46",
+		event = "VeryLazy",
 		branch = "new",
 		build = function()
 			require("base46").load_all_highlights()
@@ -17,7 +18,8 @@ local plugins = {
 
 	{
 		"nvim-tree/nvim-web-devicons",
-		lazy = true,
+		event = "VeryLazy",
+		-- lazy = true,
 		config = function()
 			dofile(vim.g.base46_cache .. "devicons")
 			require("nvim-web-devicons").setup()
@@ -59,7 +61,6 @@ local plugins = {
 	{
 		"goolord/alpha-nvim",
 		lazy = false,
-		event = "VeryLazy",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			dofile(vim.g.base46_cache .. "alpha")
@@ -70,29 +71,31 @@ local plugins = {
 	--Treesitter and indent blankline
 	{
 		"nvim-treesitter/nvim-treesitter",
-		init = function()
-			require("core.utils").lazy_load("nvim-treesitter")
-		end,
+    event = "BufEnter",
+		-- init = function()
+			-- require("core.utils").lazy_load("nvim-treesitter")
+		-- end,
 		build = ":TSUpdate",
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		config = function()
 			dofile(vim.g.base46_cache .. "syntax")
-			dofile(vim.g.base46_cache .. "treesitter")
 			require("plugins.configs.treesitter")
 		end,
-	},
 
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = "VeryLazy",
-		opts = function()
-			dofile(vim.g.base46_cache .. "blankline")
-			return require("plugins.configs.others").blankline
-		end,
+		dependencies = {
+			{
+				"lukas-reineke/indent-blankline.nvim",
+				event = "VeryLazy",
+				opts = function()
+					dofile(vim.g.base46_cache .. "blankline")
+					return require("plugins.configs.others").blankline
+				end,
 
-		config = function(_, opts)
-			require("indent_blankline").setup(opts)
-		end,
+				config = function(_, opts)
+					require("indent_blankline").setup(opts)
+				end,
+			},
+		},
 	},
 
 	--telescope
@@ -251,7 +254,7 @@ local plugins = {
 			return require("plugins.configs.others").notify
 		end,
 		config = function(_, opts)
-      dofile(vim.g.base46_cache .. "notify")
+			dofile(vim.g.base46_cache .. "notify")
 			vim.notify = require("notify")
 			vim.notify.setup(opts)
 		end,
@@ -276,39 +279,42 @@ local plugins = {
 	-- Debugger Setup for c and c++
 	{
 		"mfussenegger/nvim-dap",
-		event = "VeryLazy",
+		cmd = "DapContinue",
 		config = function(_, _)
 			require("core.utils").load_mappings("dap")
 		end,
-	},
+		dependencies = {
+			{
+				"jay-babu/mason-nvim-dap.nvim",
+				event = "VeryLazy",
+				opts = {
+					handlers = {},
+				},
+			},
 
-	{
-		"jay-babu/mason-nvim-dap.nvim",
-		event = "VeryLazy",
-		opts = {
-			handlers = {},
+			{
+				"rcarriga/nvim-dap-ui",
+				event = "VeryLazy",
+				dependencies = "mfussenegger/nvim-dap",
+				config = function()
+					local dap = require("dap")
+					local dapui = require("dapui")
+					dapui.setup()
+					dap.listeners.after.event_initialized["dapui_config"] = function()
+						dapui.open()
+					end
+					dap.listeners.before.event_terminated["dapui_config"] = function()
+						dapui.close()
+					end
+					dap.listeners.before.event_exited["dapui_config"] = function()
+						dapui.close()
+					end
+				end,
+			},
 		},
-	},
-
-	{
-		"rcarriga/nvim-dap-ui",
-		event = "VeryLazy",
-		dependencies = "mfussenegger/nvim-dap",
-		config = function()
-			local dap = require("dap")
-			local dapui = require("dapui")
-			dapui.setup()
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close()
-			end
-		end,
 	},
 }
 
-require("lazy").setup(plugins)
+local lazy_config = require("plugins.configs.lazy_nvim")
+
+require("lazy").setup(plugins, lazy_config)
