@@ -68,6 +68,15 @@ local plugins = {
 		end,
 	},
 
+
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "BufWinEnter",
+    config = function ()
+      require('plugins.configs.lualine')
+    end
+  },
+
 	--Treesitter and indent blankline
 	{
 		"nvim-treesitter/nvim-treesitter",
