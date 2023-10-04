@@ -146,13 +146,6 @@ M.lspconfig = {
       "LSP rename",
     },
 
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
-
     ["gr"] = {
       function()
         vim.lsp.buf.references()
@@ -340,5 +333,17 @@ M.bufferline = {
     ["<S-tab>"] = { "<Cmd>BufferLineCyclePrev<CR>", "goto prev buffer" },
   },
 }
+
+M.lspsaga = {
+  plugin = true,
+
+  n = {
+    ["<leader>lt"] = {":Lspsaga term_toggle<CR>", "Terminal"},
+    ["<leader>la"] = {":Lspsaga code_action<CR>", "Code Action"},
+    ["<leader>lh"] = {":Lspsaga hover_doc<CR>", "Hover documentation"},
+    ["<leader>lfi"] = {":Lspsaga finder imp<CR>", "Find implementation"},
+  }
+}
+
 
 return M
