@@ -28,7 +28,6 @@ local plugins = {
     end,
   },
 
-  -- bufferline and alpha-nvim
 
   {
     "nvim-tree/nvim-tree.lua",
@@ -45,23 +44,7 @@ local plugins = {
     end,
   },
 
-  {
-    "akinsho/bufferline.nvim",
-    event = "VeryLazy",
-    init = function()
-      require("core.utils").load_mappings("bufferline")
-    end,
-    config = function()
-      dofile(vim.g.base46_cache .. 'bufferline')
-      vim.opt.termguicolors = true
-      require("bufferline").setup({
-        options = {
-          show_tab_indicators = true,
-        },
-      })
-    end,
-  },
-  {
+    {
     "goolord/alpha-nvim",
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
