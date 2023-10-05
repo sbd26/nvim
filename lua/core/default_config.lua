@@ -26,6 +26,15 @@ M.ui = {
 		overriden_modules = nil,
 	},
 
+
+
+  tabufline = {
+    show_numbers = false,
+    enabled = true,
+    lazyload = true,
+    overriden_modules = nil,
+  },
+
 	------------------------------- nvchad_ui modules -----------------------------
 
 	cheatsheet = { theme = "grid" }, -- simple/grid

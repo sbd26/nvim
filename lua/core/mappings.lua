@@ -326,22 +326,48 @@ M.gitsigns = {
   },
 }
 
-M.bufferline = {
+
+
+
+M.tabufline = {
   plugin = true,
+
   n = {
-    ["<tab>"] = { "<Cmd>BufferLineCycleNext<CR>", "goto next buffer" },
-    ["<S-tab>"] = { "<Cmd>BufferLineCyclePrev<CR>", "goto prev buffer" },
+    -- cycle through buffers
+    ["<tab>"] = {
+      function()
+        require("nvchad.tabufline").tabuflineNext()
+      end,
+      "Goto next buffer",
+    },
+
+    ["<S-tab>"] = {
+      function()
+        require("nvchad.tabufline").tabuflinePrev()
+      end,
+      "Goto prev buffer",
+    },
+
+    -- close buffer + hide terminal buffer
+    ["<leader>x"] = {
+      function()
+        require("nvchad.tabufline").close_buffer()
+      end,
+      "Close buffer",
+    },
   },
 }
+
+
 
 M.lspsaga = {
   plugin = true,
 
   n = {
-    ["<leader>lt"] = {":Lspsaga term_toggle<CR>", "Terminal"},
-    ["<leader>la"] = {":Lspsaga code_action<CR>", "Code Action"},
-    ["<leader>lh"] = {":Lspsaga hover_doc<CR>", "Hover documentation"},
-    ["<leader>lfi"] = {":Lspsaga finder imp<CR>", "Find implementation"},
+    ["<leader>lt"] = { ":Lspsaga term_toggle<CR>", "Terminal" },
+    ["<leader>la"] = { ":Lspsaga code_action<CR>", "Code Action" },
+    ["<leader>lh"] = { ":Lspsaga hover_doc<CR>", "Hover documentation" },
+    ["<leader>lfi"] = { ":Lspsaga finder imp<CR>", "Find implementation" },
   }
 }
 
