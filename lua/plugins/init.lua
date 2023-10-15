@@ -293,7 +293,6 @@ local plugins = {
     dependencies = {
       {
         "jay-babu/mason-nvim-dap.nvim",
-        event = "VeryLazy",
         opts = {
           handlers = {},
         },
@@ -301,7 +300,6 @@ local plugins = {
 
       {
         "rcarriga/nvim-dap-ui",
-        event = "VeryLazy",
         dependencies = "mfussenegger/nvim-dap",
         config = function()
           local dap = require("dap")
